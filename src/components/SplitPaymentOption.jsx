@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReactComponent as SplitPaymentTimeline } from '../assets/sp1-timeline.svg';
 
-export default function SplitPaymentOption({totalPrice, onClick, selectedOption}) {
+export default function SplitPaymentOption({totalPrice, paymentOptions, onClick, selectedOption}) {
 
   // Calculating next payment's date
   const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];

@@ -1,15 +1,39 @@
 import { React, useState } from 'react';
 import { ReactComponent as SequraLogo } from '../assets/sequra-logo.svg';
-import SplitPaymentOption from './SplitPaymentOption';
-import PartPaymentOption from './PartPaymentOption';
 import InvoiceOption from './InvoiceOption';
 import CampaignOption from './CampaignOption';
+import PartPaymentSection from './PartPaymentSection';
+import PayLaterSection from './PayLaterSection';
 
 export default function Checkout() {
   const [selectedOption, setSelectedOption] = useState('');
 
-  const shopperName = 'Valentina';
-  const totalPrice = 99;
+  const paymentOptions= {
+    sp1: {
+      product: 'sp1',
+      instalmentFee: 0
+    },
+    pp3: {
+      product: 'pp3',
+      instalmentFee: 0
+    },
+    i1: {
+      product: 'i1',
+      instalmentFee: 0
+    },
+    pp5: {
+      product: 'pp5',
+      instalmentFee: 295
+    }
+  }
+
+  const purchaseData = {
+    name: 'Valentina',
+    surname: 'Garcia',
+    merchant: 'sonopro',
+    product: 'Curso de producción',
+    price: 30000
+  }
 
   const handleClick = (e) => setSelectedOption(e.target.name);
 
@@ -21,28 +45,18 @@ export default function Checkout() {
         </div>
 
         <div className="summary">
-          <div id="shopper-name">{shopperName.toUpperCase()}</div>
+          <div id="shopper-name">{purchaseData.name.toUpperCase()}</div>
           <div className="total-flex">
             <div className="total">Total</div>  
-            <div className="total-price">{totalPrice.toFixed(2)} €</div>
+            <div className="total-price">{(purchaseData.price / 100).toFixed(2)} €</div>
           </div>
         </div>
 
-        <div className="category-title">Fracciona tu pago</div>
-        <div className="category-subtitle">Hoy paga sólo la primera cuota</div>
+        {/* Rendering Part Payment Section if one of the part payment methods are available */}
+        {(paymentOptions.hasOwnProperty('sp1') || paymentOptions.hasOwnProperty('pp3')) && <PartPaymentSection paymentOptions={paymentOptions} purchaseData={purchaseData} handleClick={handleClick} selectedOption={selectedOption}/>}
 
-        <div className="pm-container">
-          <SplitPaymentOption totalPrice={totalPrice} onClick={handleClick} selectedOption={selectedOption} />
-          <PartPaymentOption totalPrice={totalPrice} onClick={handleClick} selectedOption={selectedOption} />
-        </div>
-
-        <div className="category-title">No lo pagues ahora</div>
-        <div className="category-subtitle">Confirma la compra sólo con tus datos personales</div>
-
-        <div className="pm-container">
-          <InvoiceOption totalPrice={totalPrice} onClick={handleClick} selectedOption={selectedOption} />
-          <CampaignOption totalPrice={totalPrice} onClick={handleClick} selectedOption={selectedOption} />
-        </div>
+        {/* Rendering Pay Later Section if one of the pay later methods are available */}
+        {(paymentOptions.hasOwnProperty('i1') || paymentOptions.hasOwnProperty('pp5')) && <PayLaterSection paymentOptions={paymentOptions} purchaseData={purchaseData} handleClick={handleClick} selectedOption={selectedOption}/>}
 
       </div>  
     </div>

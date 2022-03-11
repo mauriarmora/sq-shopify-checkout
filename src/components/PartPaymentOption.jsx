@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function PartPaymentOption({totalPrice, onClick, selectedOption}) {
+export default function PartPaymentOption({totalPrice, paymentOptions, onClick, selectedOption}) {
 
   // Setting checked true or false depending on wich option is selected
   const handleChecked = () => selectedOption === 'pp3-select' ? true : false;
@@ -13,7 +13,8 @@ export default function PartPaymentOption({totalPrice, onClick, selectedOption})
             <input type="radio" name="pp3-select" checked={handleChecked()} onClick={onClick}/>
             <label className="pm-title" htmlFor="pp3-select">Desde {(totalPrice / 4).toFixed(2)} €/mes</label>
           </div>
-        </form>       
+        </form>
+        <div className="pm-no-cost">+{(paymentOptions.instalmentFee / 100).toFixed(2)} €</div>
       </div>
 
       <div className={`"pp-dropdown" ${handleChecked() ? 'pm-dropdown-selected' : 'pm-dropdown-hidden'}`}>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function InvoiceOption({totalPrice, onClick, selectedOption}) {
+export default function InvoiceOption({totalPrice, paymentOptions, onClick, selectedOption}) {
 
   // Setting checked true or false depending on wich option is selected
   const handleChecked = () => selectedOption === 'invoice-select' ? true : false;
