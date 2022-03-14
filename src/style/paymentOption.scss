@@ -1,3 +1,8 @@
+.pm-info {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
 .pm-header {
   padding: 15px;
   display: flex;
@@ -7,38 +12,22 @@
   z-index: 10;
   background-color: white;
   border-radius: 4px;
+  border-bottom: 1px solid #ececec;
 }
 
 .pm-title {
   margin-left: 10px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
 }
 
-.pm-no-cost {
-  font-size: 14px;
+.pm-claim {
+  font-size: 13px;
   color: grey;
 }
 
-.pm-dropdown-hidden {
-  width: 468px;
-  padding: 15px;
-  border-radius: 4px;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  background-color: #fafafa;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.4s ease-out;
-  position: absolute;
-  div {
-    font-size: 13px;
-  }
-}
-
-.pm-dropdown-selected {
-  width: 468px;
-  padding: 15px;
+.pm-dropdown {
+  padding: 20px 50px;
   border-radius: 4px;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
@@ -48,14 +37,12 @@
   transition: max-height 0.4s ease-out;
   position: relative;
   overflow: hidden;
+  border-bottom: 1px solid #ececec;
+  max-width: 500px;
   div {
     font-size: 13px;
+    line-height: 25px;
   }
-}
-
-.pm-timeline {
-  width: 400px;
-  margin: 5px auto;
 }
 
 .first-pm-payment,
@@ -71,6 +58,7 @@
   width: 420px;
   margin: 0 auto;
 }
+
 .timeline-months {
   display: flex;
   justify-content: space-between;
@@ -78,10 +66,3 @@
   margin: 0 auto;
   margin-top: 20px;
 }
-
-// .pm-selected {
-//   opacity: 1;
-//   max-height: 300px;
-//   position: relative;
-//   overflow: hidden;
-// }

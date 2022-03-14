@@ -1,64 +1,87 @@
-import { React, useState } from 'react';
-import { ReactComponent as SequraLogo } from '../assets/sequra-logo.svg';
-import InvoiceOption from './InvoiceOption';
-import CampaignOption from './CampaignOption';
-import PartPaymentSection from './PartPaymentSection';
-import PayLaterSection from './PayLaterSection';
+import React from 'react';
+import PaymentOption from './PaymentOption';
 
-export default function Checkout() {
-  const [selectedOption, setSelectedOption] = useState('');
+class Checkout extends React.Component {
 
-  const paymentOptions= {
-    sp1: {
-      product: 'sp1',
-      instalmentFee: 0
-    },
-    pp3: {
-      product: 'pp3',
-      instalmentFee: 0
-    },
-    i1: {
-      product: 'i1',
-      instalmentFee: 0
-    },
-    pp5: {
-      product: 'pp5',
-      instalmentFee: 295
-    }
+  constructor(props) {
+    super(props)
+    this.shopName = props.shopName
+    this.totalPrice = props.totalPrice
+    this.paymentOptions = props.paymentOptions
+    this.destURL = props.destURL
+    this.state = {
+      paymentOption: ""
+    };
+    this.handleSelect = this.handleSelect.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  const purchaseData = {
-    name: 'Valentina',
-    surname: 'Garcia',
-    merchant: 'sonopro',
-    product: 'Curso de producción',
-    price: 30000
+  handleSelect(event) {
+    this.setState({
+      paymentOption: event.target.value
+    });
   }
 
-  const handleClick = (e) => setSelectedOption(e.target.name);
+  handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(this.state.paymentOption);
+  }
 
-  return(
-    <div className="checkout-wrapper">
-      <div className="checkout-container">
-        <div className="logo-wrapper">
-          <SequraLogo />
-        </div>
-
-        <div className="summary">
-          <div id="shopper-name">{purchaseData.name.toUpperCase()}</div>
-          <div className="total-flex">
-            <div className="total">Total</div>  
-            <div className="total-price">{(purchaseData.price / 100).toFixed(2)} €</div>
+  render() {
+    return(
+      <div className="checkout-wrapper">
+        <div className="checkout-container">
+          <div className="logo-wrapper">
+          <img
+              width="100%"
+              height="100%"
+              alt="SeQura Logo"
+              src="https://live.sequracdn.com/assets/images/logos/logo.svg"
+            />
           </div>
-        </div>
 
-        {/* Rendering Part Payment Section if one of the part payment methods are available */}
-        {(paymentOptions.hasOwnProperty('sp1') || paymentOptions.hasOwnProperty('pp3')) && <PartPaymentSection paymentOptions={paymentOptions} purchaseData={purchaseData} handleClick={handleClick} selectedOption={selectedOption}/>}
+          <div className="summary">
+            <div id="shop-name">{this.shopName.toUpperCase()}</div>
+            <div className="total-flex">
+              <div className="total">Total</div>  
+              <div className="total-price">{(this.totalPrice / 100).toFixed(2)} €</div>
+            </div>
+          </div>
 
-        {/* Rendering Pay Later Section if one of the pay later methods are available */}
-        {(paymentOptions.hasOwnProperty('i1') || paymentOptions.hasOwnProperty('pp5')) && <PayLaterSection paymentOptions={paymentOptions} purchaseData={purchaseData} handleClick={handleClick} selectedOption={selectedOption}/>}
+          <form 
+            action={"http://programminghead.com" + this.state.paymentOption}
+            // onSubmit={this.handleSubmit}
+          >
+            {this.paymentOptions.map((po, i) => {
+              return (
+              <>
+                <div key={i} className="category-title">{po.title}</div>
+                <div className="category-description">{po.description}</div>
+                
+                <div className="pm-container"> 
+                  {po.methods.map((pm, i) => {
+                    return <PaymentOption key={i} pmInfo={pm} onSelect={this.handleSelect} />
+                  })}
+                </div>
+              </>
+            )})}
 
-      </div>  
-    </div>
-  )
+            <div className="button-container">
+              <button type="submit" className="submit-button">Continuar</button>
+            </div>
+
+          </form>
+
+          {/* Rendering Part Payment Section if one of the part payment methods are available
+          {(paymentOptions.hasOwnProperty('sp1') || paymentOptions.hasOwnProperty('pp3')) && <PartPaymentSection paymentOptions={paymentOptions} purchaseData={purchaseData} handleClick={handleClick} selectedOption={selectedOption}/>}
+
+          {/* Rendering Pay Later Section if one of the pay later methods are available */}
+          {/* {(paymentOptions.hasOwnProperty('i1') || paymentOptions.hasOwnProperty('pp5')) && <PayLaterSection paymentOptions={paymentOptions} purchaseData={purchaseData} handleClick={handleClick} selectedOption={selectedOption}/>} */}
+
+        </div>  
+      </div>
+    )
+  }
 }
+
+export default Checkout

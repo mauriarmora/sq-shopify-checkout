@@ -23,9 +23,9 @@
   margin-top: 50px;
 }
 
-#shopper-name {
+#shop-name {
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 10px;
 }
 
@@ -36,20 +36,19 @@
 
 .total,
 .total-price {
-  font-size: 17.5px;
+  font-size: 16px;
   font-weight: 400;
 }
 
 .category-title {
-  font-size: 17.5px;
-  font-weight: 600;
+  font-size: 16px;
   margin-top: 40px;
   margin-bottom: 3px;
   margin-left: 1px;
 }
 
-.category-subtitle {
-  font-size: 14px;
+.category-description {
+  font-size: 13px;
   margin-bottom: 20px;
   margin-left: 1px;
 }
@@ -57,4 +56,23 @@
 .pm-container {
   border: 1px solid #ececec;
   border-radius: 4px;
+  margin-bottom: -1px;
+  border-bottom: none;
+}
+
+.button-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-button {
+  font-family: "Open Sans";
+  font-weight: 600;
+  font-size: 16px;
+  padding: 13px 32px;
+  background-color: #14a48b;
+  color: white;
+  border: none;
+  border-radius: 3px;
 }
