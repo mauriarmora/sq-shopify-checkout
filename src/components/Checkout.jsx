@@ -1,5 +1,5 @@
 import React from 'react';
-import PaymentOption from './PaymentOption';
+import PaymentMethod from './PaymentMethod';
 
 class Checkout extends React.Component {
 
@@ -10,10 +10,10 @@ class Checkout extends React.Component {
     this.paymentOptions = props.paymentOptions
     this.destURL = props.destURL
     this.state = {
-      paymentOption: ""
+      paymentOption: "",
     };
     this.handleSelect = this.handleSelect.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSelect(event) {
@@ -23,8 +23,8 @@ class Checkout extends React.Component {
   }
 
   handleSubmit = (e) => {
+    console.log(e.target);
     e.preventDefault();
-    console.log(this.state.paymentOption);
   }
 
   render() {
@@ -49,35 +49,30 @@ class Checkout extends React.Component {
           </div>
 
           <form 
-            action={"http://programminghead.com" + this.state.paymentOption}
-            // onSubmit={this.handleSubmit}
+            // action={"http://shopify.com" + this.state.paymentOption}
+            value={this.state.paymentOption}
+            onSubmit={this.handleSubmit}
           >
             {this.paymentOptions.map((po, i) => {
               return (
               <>
                 <div key={i} className="category-title">{po.title}</div>
                 <div className="category-description">{po.description}</div>
-                
                 <div className="pm-container"> 
-                  {po.methods.map((pm, i) => {
-                    return <PaymentOption key={i} pmInfo={pm} onSelect={this.handleSelect} />
-                  })}
+                  
+                  {po.methods.map((pm, i) => <PaymentMethod pmInfo={pm} paymentOption={po} onSelect={this.handleSelect}/> )}
+
                 </div>
               </>
+
             )})}
 
             <div className="button-container">
+              <a className="back-link" href="http://shopify.com">Volver a pagos</a>
               <button type="submit" className="submit-button">Continuar</button>
             </div>
 
           </form>
-
-          {/* Rendering Part Payment Section if one of the part payment methods are available
-          {(paymentOptions.hasOwnProperty('sp1') || paymentOptions.hasOwnProperty('pp3')) && <PartPaymentSection paymentOptions={paymentOptions} purchaseData={purchaseData} handleClick={handleClick} selectedOption={selectedOption}/>}
-
-          {/* Rendering Pay Later Section if one of the pay later methods are available */}
-          {/* {(paymentOptions.hasOwnProperty('i1') || paymentOptions.hasOwnProperty('pp5')) && <PayLaterSection paymentOptions={paymentOptions} purchaseData={purchaseData} handleClick={handleClick} selectedOption={selectedOption}/>} */}
-
         </div>  
       </div>
     )
