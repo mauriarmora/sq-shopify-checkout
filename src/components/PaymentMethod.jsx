@@ -1,25 +1,28 @@
 import React from 'react';
 
-export default function PaymentMethod({pmInfo, onSelect, paymentOption}) {
+export default function PaymentMethod({pmInfo, onSelect, selectedMethod, paymentOption}) {
+
+  // Comparing the selected PM in the state and the current PM, so it knows if it's the one selected
+  const checked = () => selectedMethod === pmInfo.product ? true : false;
 
   return(
     <div>
       <div className="pm-header">
           <div>
-            <input type="radio" name="payment-option" value={pmInfo.product} onClick={onSelect}/>
+            <input type="radio" name="product_code" checked={checked()} value={pmInfo.product} onClick={onSelect}/>
             <label className="pm-title" htmlFor="pm-select">{pmInfo.title}</label>
           </div>
         <div className="pm-claim">{pmInfo.claim}</div>
       </div>
 
-      {/* The dropdown doesn't show if there's no description */}
+      {/* If the PM does not have description, it doesn't render the dropdown */}
       {pmInfo.description !== null &&
-
-        // If there's two payment methods in on payment section, the bottom border-radius is 0
-        <div className="pm-dropdown" style={{ borderRadius: paymentOption.methods.length > 1 && '3px 3px 0 0'}}>
+        <div
+          className={checked() ? 'pm-dropdown-selected' : 'pm-dropdown-hidden'} 
+          style={{ borderRadius: paymentOption.methods.length > 1 && '3px 3px 0 0'}}
+        >
           <div className="pm-info">{pmInfo.description}</div>
         </div>
-        
       }
         
     </div>

@@ -1,0 +1,53 @@
+import React from 'react';
+import PaymentMethod from './PaymentMethod';
+
+export default function Form({paymentOptions, destURL, orderUUID, selectedMethod, handleSelect, cancelURL}) {
+
+  // Returning the description of the payment category
+  function categoryDescription(title) {
+    if (title === 'Paga ahora') {
+      return 'Con tarjeta de crédito o débito';
+    } else if (title === 'Paga Después') {
+      return 'Confirma la compra con tus datos personales';
+    } else if (title === 'Paga Fraccionado') {
+      return 'Hoy solo pagas la primera cuota';
+    }
+  }
+
+  return(
+    <form action={destURL} method="get">
+
+      <input type="hidden" name="order_uuid" value={orderUUID}/>
+    
+      {/* Looping through the payment categories and rendering them */}
+      {paymentOptions.map((po, i) => {
+        return (
+        <>
+          <div key={i} className="category-title">{po.title}</div>
+          <div className="category-description">{categoryDescription(po.title)}</div>
+          <div className="pm-container"> 
+            
+            {/* Looping througn the payment methods of each of the categories and rendering them */}
+            {po.methods.map((pm, i) => {
+              console.log(pm.product)
+              return(
+                <PaymentMethod 
+                  pmInfo={pm} 
+                  paymentOption={po} 
+                  selectedMethod={selectedMethod} 
+                  onSelect={handleSelect}
+                />
+              )})}
+
+          </div>
+        </>
+      )})}
+
+      <div className="button-container">
+        <a className="back-link" href={cancelURL}>Volver a pagos</a>
+        <button type="submit" className="submit-button">Continuar</button>
+      </div>
+
+    </form>
+  );
+}

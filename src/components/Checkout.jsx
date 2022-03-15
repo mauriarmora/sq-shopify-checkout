@@ -1,5 +1,5 @@
 import React from 'react';
-import PaymentMethod from './PaymentMethod';
+import Form from './Form';
 
 class Checkout extends React.Component {
 
@@ -9,22 +9,19 @@ class Checkout extends React.Component {
     this.totalPrice = props.totalPrice
     this.paymentOptions = props.paymentOptions
     this.destURL = props.destURL
+    this.orderUUID = props.orderUUID
+    this.cancelURL = props.cancelURL
     this.state = {
-      paymentOption: "",
+      selectedMethod: "",
     };
     this.handleSelect = this.handleSelect.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSelect(event) {
+  // Saving the selected payment method in the state
+  handleSelect(e) {
     this.setState({
-      paymentOption: event.target.value
+      selectedMethod: e.target.value
     });
-  }
-
-  handleSubmit = (e) => {
-    console.log(e.target);
-    e.preventDefault();
   }
 
   render() {
@@ -33,11 +30,11 @@ class Checkout extends React.Component {
         <div className="checkout-container">
           <div className="logo-wrapper">
           <img
-              width="100%"
-              height="100%"
-              alt="SeQura Logo"
-              src="https://live.sequracdn.com/assets/images/logos/logo.svg"
-            />
+            width="100%"
+            height="100%"
+            alt="SeQura Logo"
+            src="https://live.sequracdn.com/assets/images/logos/logo.svg"
+          />
           </div>
 
           <div className="summary">
@@ -48,34 +45,26 @@ class Checkout extends React.Component {
             </div>
           </div>
 
-          <form 
-            // action={"http://shopify.com" + this.state.paymentOption}
-            value={this.state.paymentOption}
-            onSubmit={this.handleSubmit}
-          >
-            {this.paymentOptions.map((po, i) => {
-              return (
-              <>
-                <div key={i} className="category-title">{po.title}</div>
-                <div className="category-description">{po.description}</div>
-                <div className="pm-container"> 
-                  
-                  {po.methods.map((pm, i) => <PaymentMethod pmInfo={pm} paymentOption={po} onSelect={this.handleSelect}/> )}
+          { (this.paymentOptions.length === 0) &&
+            <>
+              <div className="no-pm-available">No hay métodos de pago disponibles</div>
+              <a className="back-link" href={this.cancelURL}>Volver a pagos</a>
+            </>
+          }
+          { (this.paymentOptions.length !== 0) &&
+            <Form 
+              paymentOptions={this.paymentOptions} 
+              destURL={this.destURL} 
+              orderUUID={this.orderUUID} 
+              selectedMethod={this.state.selectedMethod}
+              cancelURL={this.cancelURL}
+              handleSelect={this.handleSelect}
+            />
+          }
 
-                </div>
-              </>
-
-            )})}
-
-            <div className="button-container">
-              <a className="back-link" href="http://shopify.com">Volver a pagos</a>
-              <button type="submit" className="submit-button">Continuar</button>
-            </div>
-
-          </form>
         </div>  
       </div>
-    )
+    );
   }
 }
 
