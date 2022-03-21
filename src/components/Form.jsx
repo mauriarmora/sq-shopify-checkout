@@ -1,7 +1,7 @@
 import React from 'react';
 import PaymentMethod from './PaymentMethod';
 
-export default function Form({paymentOptions, destURL, orderUUID, selectedMethod, handleSelect, cancelURL}) {
+export default function Form({ paymentOptions, destURL, orderUUID, selectedMethod, handleSelect, cancelURL }) {
 
   // Returning the description of the payment category
   function categoryDescription(title) {
@@ -21,17 +21,16 @@ export default function Form({paymentOptions, destURL, orderUUID, selectedMethod
     
       {/* Looping through the payment categories and rendering them */}
       {paymentOptions.map((po, i) => {
-        return (
+        if (po.methods.length !== 0) return (
         <>
-          <div key={i} className="category-title">{po.title}</div>
+          <div className="category-title">{po.title}</div>
           <div className="category-description">{categoryDescription(po.title)}</div>
           <div className="pm-container"> 
             
             {/* Looping througn the payment methods of each of the categories and rendering them */}
             {po.methods.map((pm, i) => {
-              console.log(pm.product)
               return(
-                <PaymentMethod 
+                <PaymentMethod
                   pmInfo={pm} 
                   paymentOption={po} 
                   selectedMethod={selectedMethod} 

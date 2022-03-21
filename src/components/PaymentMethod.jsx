@@ -7,24 +7,24 @@ export default function PaymentMethod({pmInfo, onSelect, selectedMethod, payment
 
   return(
     <div>
-      <div className="pm-header">
-          <div>
-            <input type="radio" name="product_code" checked={checked()} value={pmInfo.product} onClick={onSelect}/>
-            <label className="pm-title" htmlFor="pm-select">{pmInfo.title}</label>
-          </div>
-        <div className="pm-claim">{pmInfo.claim}</div>
+      <div className="pm-header" style={{ borderRadius: checked() && '3px 3px 0 0'}}>
+        <div>
+          <input type="radio" name="product_code" readOnly checked={checked()} value={ pmInfo.product } onClick={ onSelect }/>
+          <label className="pm-title" htmlFor="pm-select">{ pmInfo.title }</label>
+        </div>
+        <div className="pm-claim">{ pmInfo.claim }</div>
       </div>
 
       {/* If the PM does not have description, it doesn't render the dropdown */}
       {pmInfo.description !== null &&
         <div
           className={checked() ? 'pm-dropdown-selected' : 'pm-dropdown-hidden'} 
-          style={{ borderRadius: paymentOption.methods.length > 1 && '3px 3px 0 0'}}
+          style={{ borderRadius: paymentOption.methods.length > 1 && '3px 3px 0 0' }}
         >
-          <div className="pm-info">{pmInfo.description}</div>
+          <div className="divm-info">{ pmInfo.description.replace(/\<br\/>/g, "\n").replace(/\<br \/\>/g, "\n") }</div>
         </div>
       }
-        
+
     </div>
-  );
+  )
 }
