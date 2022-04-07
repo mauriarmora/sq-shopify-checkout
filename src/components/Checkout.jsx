@@ -10,25 +10,23 @@ const Checkout = ({ destURL, orderUUID, cancelURL, totalPrice, shopName, payment
   const handleSelect = (e) => setSelectedMethod( e.target.value );
 
   useEffect(() => {
-
-    paymentOptions["payment_options"].filter(po => po.methods.length !== 0).map(po => {
+    paymentOptions.filter(p => p.length !== 0).map(po => {
       po.methods.map(pm => {
         setAvailablePaymentMethods([...availablePaymentMethods, pm.product])
       })
-    });
-
-  }, []);
+    })
+  }, [])
 
   return (
     <div className="checkout-wrapper">
       <div className="checkout-container">
         <div className="logo-wrapper">
-        <img
-          width="100%"
-          height="100%"
-          alt="SeQura Logo"
-          src="https://live.sequracdn.com/assets/images/logos/logo.svg"
-        />
+          <img
+            width="100%"
+            height="100%"
+            alt="SeQura Logo"
+            src="https://live.sequracdn.com/assets/images/logos/logo.svg"
+          />
         </div>
 
         <div className="summary">
@@ -42,7 +40,7 @@ const Checkout = ({ destURL, orderUUID, cancelURL, totalPrice, shopName, payment
         {/* Shows if no payment methods available */}
         { (availablePaymentMethods.length === 0) && 
           <>
-            <div className="no-pm-available">No hay métodos de pago disponibles</div>
+            <div className="unavailable-message">No hay métodos de pago disponibles</div>
             <a className="back-link" href={cancelURL}>Volver a pagos</a>
           </>
         }
@@ -50,7 +48,7 @@ const Checkout = ({ destURL, orderUUID, cancelURL, totalPrice, shopName, payment
         {/* Shows if payment methods available */}
         { (availablePaymentMethods.length !== 0) &&
           <Form 
-            paymentOptions={paymentOptions["payment_options"]} 
+            paymentOptions={paymentOptions} 
             destURL={destURL} 
             orderUUID={orderUUID} 
             selectedMethod={selectedMethod}

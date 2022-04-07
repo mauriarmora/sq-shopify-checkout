@@ -14,37 +14,46 @@ export default function Form({ paymentOptions, destURL, orderUUID, selectedMetho
     }
   }
 
+  const buttonDisabled = selectedMethod === '' ? true : false;
+
   return(
     <form action={destURL} method="get">
 
-      <input type="hidden" name="order_uuid" value={orderUUID}/>
+      <input key="order_uuid" type="hidden" name="order_uuid" value={orderUUID}/>
     
       {/* Looping through the payment categories and rendering them */}
       {paymentOptions.map((po, i) => {
         if (po.methods.length !== 0) return (
-        <>
-          <div className="category-title">{po.title}</div>
-          <div className="category-description">{categoryDescription(po.title)}</div>
-          <div className="pm-container"> 
-            
-            {/* Looping througn the payment methods of each of the categories and rendering them */}
-            {po.methods.map((pm, i) => {
-              return(
-                <PaymentMethod
-                  pmInfo={pm} 
-                  paymentOption={po} 
-                  selectedMethod={selectedMethod} 
-                  onSelect={handleSelect}
-                />
-              )})}
+          <div key={i}>
+            <div className="category-title">{po.title}</div>
+            <div className="category-description">{categoryDescription(po.title)}</div>
+            <div className="pm-container"> 
+              
+              {/* Looping througn the payment methods of each of the categories and rendering them */}
+              {po.methods.map((pm, j) => {
+                return(
+                  <PaymentMethod
+                    key={j}
+                    pmInfo={pm} 
+                    paymentOption={po} 
+                    selectedMethod={selectedMethod} 
+                    onSelect={handleSelect}
+                  />
+                )})}
 
+            </div>
           </div>
-        </>
-      )})}
+        )})}
 
-      <div className="button-container">
+      <div key="button-container" className="button-container">
         <a className="back-link" href={cancelURL}>Volver a pagos</a>
-        <button type="submit" className="submit-button">Continuar</button>
+        <button 
+          type="submit" 
+          disabled={buttonDisabled}
+          className="submit-button"
+          style={{ backgroundColor: buttonDisabled && "#BBBBBB", cursor: buttonDisabled && "default" }}
+        >Continuar
+        </button>
       </div>
 
     </form>
