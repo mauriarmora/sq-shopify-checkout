@@ -1,4 +1,5 @@
 import React from 'react';
+import Pp3PaymentMethod from './Pp3PaymentMethod';
 
 export default function PaymentMethod({pmInfo, onSelect, selectedMethod, paymentOption}) {
 
@@ -23,12 +24,12 @@ export default function PaymentMethod({pmInfo, onSelect, selectedMethod, payment
           className={checked ? 'pm-dropdown-selected' : 'pm-dropdown-hidden'} 
           style={{ borderRadius: paymentOption.methods.length > 1 && '3px 3px 0 0' }}
         >
-          {/* {pmInfo.product === 'pp3' && 
-          <div className="instalments">
-            {console.log(pmInfo)}
-          </div>
-          } */}
-          <div className="pm-description">{ pmDescription.map((pm, i) => <li key={i}>{pm}</li>) }</div>
+          {/* If the PM is PP3 it renders the component where it displays the instalments */}
+          {(pmInfo.product === 'pp3') && 
+            <Pp3PaymentMethod pmDescription={pmDescription} />
+          }
+
+          {pmInfo.product !== 'pp3' && <div className="pm-description">{ pmDescription.map((pm, i) => <li key={i}>{pm}</li>) }</div> }
         </div>
       }
 

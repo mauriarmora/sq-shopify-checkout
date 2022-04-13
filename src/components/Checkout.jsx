@@ -11,8 +11,8 @@ const Checkout = ({ destURL, orderUUID, cancelURL, totalPrice, shopName, payment
 
   useEffect(() => {
     paymentOptions.filter(p => p.length !== 0).map(po => {
-      po.methods.map(pm => {
-        setAvailablePaymentMethods([...availablePaymentMethods, pm.product])
+      return po.methods.map(pm => {
+       return setAvailablePaymentMethods([...availablePaymentMethods, pm.product])
       })
     })
   }, [])

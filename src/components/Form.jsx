@@ -23,7 +23,7 @@ export default function Form({ paymentOptions, destURL, orderUUID, selectedMetho
     
       {/* Looping through the payment categories and rendering them */}
       {paymentOptions.map((po, i) => {
-        if (po.methods.length !== 0) return (
+        return (po.methods.length !== 0) && 
           <div key={i}>
             <div className="category-title">{po.title}</div>
             <div className="category-description">{categoryDescription(po.title)}</div>
@@ -43,7 +43,7 @@ export default function Form({ paymentOptions, destURL, orderUUID, selectedMetho
 
             </div>
           </div>
-        )})}
+        })}
 
       <div key="button-container" className="button-container">
         <a className="back-link" href={cancelURL}>Volver a pagos</a>
