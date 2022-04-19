@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function Pp3PaymentMethod({ pmDescription }) {
+export default function PpPaymentMethod({ pmDescription }) {
 
   const [instalments, setInstalments] = useState([]);
 
@@ -17,8 +17,11 @@ export default function Pp3PaymentMethod({ pmDescription }) {
       // and pushes them into 'insArray' to be set lates to the state
       insArray.push((typeof(ins) === 'string') && ins.split(' de '));
     })
-    // Deleting the last elements of the Array, as it's empty
+    
+    // Deleting first or last element if they are empty
+    if (insArray[0] = ' ') insArray.shift();
     insArray.pop()
+
     setInstalments(insArray);
   }, []);
 

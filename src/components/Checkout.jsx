@@ -38,7 +38,7 @@ const Checkout = ({ destURL, orderUUID, cancelURL, totalPrice, shopName, payment
         </div>
 
         {/* Shows if no payment methods available */}
-        { (availablePaymentMethods.length === 0) && 
+        { (availablePaymentMethods.length === 0) &&
           <>
             <div className="unavailable-message">No hay métodos de pago disponibles</div>
             <a className="back-link" href={cancelURL}>Volver a pagos</a>

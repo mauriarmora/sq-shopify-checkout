@@ -22,16 +22,17 @@
   margin-bottom: 0;
 }
 
-.pm-claim {
+.pm-cost-description {
   font-size: 13px;
   color: #14a38b;
 }
 
 .pm-dropdown-hidden {
+  position: absolute;
+  bottom: 0px;
   max-height: 0;
   opacity: 0;
-  transition: max-height 0.5s ease-out;
-  position: absolute;
+  transition: max-height 0.4s ease-out;
 }
 
 .pm-dropdown-selected {
@@ -42,7 +43,7 @@
   background-color: #fafafa;
   max-height: 300px;
   opacity: 1;
-  transition: max-height 0.5s ease-out;
+  transition: max-height 0.4s ease-out;
   position: relative;
   overflow: hidden;
   border-bottom: 1px solid #ececec;
